@@ -33,5 +33,8 @@ public class AssertTest {
 		Assert.assertSame(u1, u1);  //compara instancias do mesmo objeto
 		Assert.assertNotSame(u1, u2);
 		Assert.assertNull(u3);
+		
+	
+		
 	}
 }
