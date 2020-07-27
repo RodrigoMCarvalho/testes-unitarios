@@ -14,7 +14,7 @@ public class AssertTest {
 		Assert.assertFalse(false);
 		
 		Assert.assertEquals("Erro de comparação: ",1, 2);  //String só irá aparecer se ocorrer falha
-		Assert.assertEquals(2.1234, 2.1234569, 0.0001);  //delta eh a margem de erro
+		Assert.assertEquals(2.1234, 2.1234569, 0.0001);  //delta eh a margem de erro, no caso 0.0001
 		Assert.assertEquals(Math.PI, 3.14, 0.01);
 		
 		int n1 = 5;
