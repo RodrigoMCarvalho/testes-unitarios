@@ -1,12 +1,11 @@
 package br.ce.wcaquino.entidades;
 
 import java.util.Date;
-import java.util.List;
 
 public class Locacao {
 
 	private Usuario usuario;
-	private List<Filme> filmes;
+	private Filme filme;
 	private Date dataLocacao;
 	private Date dataRetorno;
 	private Double valor;
@@ -35,11 +34,10 @@ public class Locacao {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	public List<Filme> getFilmes() {
-		return filmes;
+	public Filme getFilme() {
+		return filme;
 	}
-	public void setFilmes(List<Filme> filmes) {
-		this.filmes = filmes;
+	public void setFilme(Filme filme) {
+		this.filme = filme;
 	}
-	
 }
