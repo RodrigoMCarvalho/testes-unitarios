@@ -4,6 +4,7 @@ import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,6 +25,8 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.excecoes.FilmeSemEstoqueException;
 import br.ce.wcaquino.excecoes.LocadoraException;
+import br.ce.wcaquino.matchers.DiaSemanaMatcher;
+import br.ce.wcaquino.matchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTest {
@@ -59,6 +63,9 @@ public class LocacaoServiceTest {
 
 	@Test
 	public void deveAlugarFilmeComSucesso() throws Exception {
+		
+		Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+		
 		// cenario
 		Usuario usuario = new Usuario("Usuario 1");
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 5.0), 
@@ -215,6 +222,7 @@ public class LocacaoServiceTest {
 	
 	@Test
 	public void deveDevolverNaSegundaAoAlugarNoSabado() throws LocadoraException, FilmeSemEstoqueException {
+		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
 		//cenario
 		Usuario usuario = new Usuario("Usuario 1");
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 1, 4.0));
@@ -223,11 +231,12 @@ public class LocacaoServiceTest {
 		Locacao retorno = locacaoService.alugarFilme(usuario, filmes);
 		
 		//verificacao
-		boolean ehSegunda = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
-		Assert.assertTrue(ehSegunda);
+		//assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.SUNDAY));
+		assertThat(retorno.getDataRetorno(), MatchersProprios.caiEm(Calendar.SUNDAY));
+		assertThat(retorno.getDataRetorno(), MatchersProprios.caiNumaSegunda());
 	}
 	
-	
+
 	
 	
 	
