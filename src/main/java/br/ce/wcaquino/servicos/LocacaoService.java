@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -16,10 +17,13 @@ import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoService {
 	
+	private LocacaoDAO dao;
+	
 	private static Double DESCONTO_25_PORCENTO = 0.75d;
 	private static Double DESCONTO_50_PORCENTO = 0.50d;
 	private static Double DESCONTO_75_PORCENTO = 0.25d;
 	private static Double DESCONTO_100_PORCENTO = 0d;
+
 	
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws LocadoraException, FilmeSemEstoqueException {
 		
@@ -62,9 +66,18 @@ public class LocacaoService {
 		}
 		locacao.setDataRetorno(dataEntrega);
 		
+		dao.salvar(locacao);
+		
 		return locacao;
 	}
 
+
+	public void setDao(LocacaoDAO dao) {
+		this.dao = dao;
+	}
+	
+
+	
 	
 	
 	
