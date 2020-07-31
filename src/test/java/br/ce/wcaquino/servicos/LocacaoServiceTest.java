@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -21,9 +20,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.UsuarioBuilder;
+import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -31,7 +32,6 @@ import br.ce.wcaquino.excecoes.FilmeSemEstoqueException;
 import br.ce.wcaquino.excecoes.LocadoraException;
 import br.ce.wcaquino.matchers.MatchersProprios;
 import br.ce.wcaquino.utils.DataUtils;
-import buildermaster.BuilderMaster;
 
 public class LocacaoServiceTest {
 	
@@ -46,6 +46,9 @@ public class LocacaoServiceTest {
 	@Before
 	public void before() {
 		locacaoService = new LocacaoService();
+		LocacaoDAO dao = Mockito.mock(LocacaoDAO.class);
+		locacaoService.setDao(dao);
+		//locacaoService.setLocacaoDAO(dao);
 		//System.out.println("Before");
 	}
 	
@@ -235,9 +238,9 @@ public class LocacaoServiceTest {
 	
 
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new buildermaster.BuilderMaster().gerarCodigoClasse(Locacao.class);
-	}
+	}*/
 	
 	
 	
