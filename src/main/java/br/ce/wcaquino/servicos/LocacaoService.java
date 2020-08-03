@@ -18,6 +18,8 @@ import br.ce.wcaquino.utils.DataUtils;
 public class LocacaoService {
 	
 	private LocacaoDAO dao;
+	private SPCService spcService;
+	private EmailService emailService;
 	
 	private static Double DESCONTO_25_PORCENTO = 0.75d;
 	private static Double DESCONTO_50_PORCENTO = 0.50d;
@@ -37,6 +39,9 @@ public class LocacaoService {
 		}
 		if(usuario == null) {
 			throw new LocadoraException("Usuário vazio");
+		}
+		if(spcService.possuiNegaticacao(usuario)) {
+			throw new LocadoraException("Usuario negativado");
 		}
 		Locacao locacao = new Locacao();
 		locacao.setFilmes(new ArrayList<Filme>(filmes));
@@ -70,13 +75,27 @@ public class LocacaoService {
 		
 		return locacao;
 	}
-
+	
+	public void notificarAtraso() {
+		List<Locacao> locacoes = dao.obterLocacoesPendentes();
+		for(Locacao locacao: locacoes) {
+			emailService.notificarAtraso(locacao.getUsuario());
+		}
+	}
 
 	public void setDao(LocacaoDAO dao) {
 		this.dao = dao;
 	}
-	
 
+	public void setSpcService(SPCService spcService) {
+		this.spcService = spcService;
+	}
+
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
+	
+	
 	
 	
 	
