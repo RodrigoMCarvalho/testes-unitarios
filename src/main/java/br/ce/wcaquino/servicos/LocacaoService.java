@@ -79,22 +79,12 @@ public class LocacaoService {
 	public void notificarAtraso() {
 		List<Locacao> locacoes = dao.obterLocacoesPendentes();
 		for(Locacao locacao: locacoes) {
-			emailService.notificarAtraso(locacao.getUsuario());
+			if(locacao.getDataRetorno().before(new Date())) {
+				emailService.notificarAtraso(locacao.getUsuario());
+			}
 		}
 	}
 
-	public void setDao(LocacaoDAO dao) {
-		this.dao = dao;
-	}
-
-	public void setSpcService(SPCService spcService) {
-		this.spcService = spcService;
-	}
-
-	public void setEmailService(EmailService emailService) {
-		this.emailService = emailService;
-	}
-	
 	
 	
 	
