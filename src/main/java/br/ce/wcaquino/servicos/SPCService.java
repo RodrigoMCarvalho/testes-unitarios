@@ -4,5 +4,5 @@ import br.ce.wcaquino.entidades.Usuario;
 
 public interface SPCService {
 
-	public boolean possuiNegaticacao(Usuario usuario);
+	public boolean possuiNegaticacao(Usuario usuario) throws Exception;
 }
