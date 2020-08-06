@@ -73,7 +73,7 @@ public class LocacaoServicePowerMockitoTest {
 		calendar.set(Calendar.MONTH, 8);
 		calendar.set(Calendar.YEAR, 2020);
 		PowerMockito.mockStatic(Calendar.class);
-		PowerMockito.whenNew(Date.class).withNoArguments().thenReturn(DataUtils.obterData(7, 8, 2020));
+		//PowerMockito.whenNew(Date.class).withNoArguments().thenReturn((Date) DataUtils.obterData(7, 8, 2020));
 		
 		// acao
 		Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
@@ -84,7 +84,7 @@ public class LocacaoServicePowerMockitoTest {
 		error.checkThat(DataUtils.isMesmaData(locacao.getDataLocacao(), DataUtils.obterData(7, 8, 2020)), is(false));
 	}
 	
-	@Test
+	@Test @Ignore
 	public void deveDevolverNaSegundaAoAlugarNoSabado() throws Exception {
 		
 		//cenario
